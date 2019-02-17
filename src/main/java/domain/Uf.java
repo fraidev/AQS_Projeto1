@@ -9,60 +9,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_cidade")
-public class Cidade implements Serializable {
+@Table(name="tb_uf")
+public class Uf  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@Column(name="nome", length=50, nullable=false )
-	private String nome;
-	@OneToMany(mappedBy="cidade", cascade = CascadeType.ALL)
-	private List<Bairro> bairros;
-	@OneToMany(mappedBy="cidade")
-	private List<Fiscalizacao> fiscalizacoes;
-	@OneToMany(mappedBy="cidade")
-	private List<Empresa> empresas;
-	@ManyToOne
-    @JoinColumn(name="ufId")
-	private Uf uf;
-	
-	public List<Bairro> getBairros() {
-		return bairros;
-	}
-	public void setBairros(List<Bairro> bairros) {
-		this.bairros = bairros;
-	}
-	public List<Fiscalizacao> getFiscalizacoes() {
-		return fiscalizacoes;
-	}
-	public void setFiscalizacoes(List<Fiscalizacao> fiscalizacoes) {
-		this.fiscalizacoes = fiscalizacoes;
-	}
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
-	}
-	public Uf getUf() {
-		return uf;
-	}
-	public void setUf(Uf uf) {
-		this.uf = uf;
-	}
+	@Column(name = "sigla")
+	private String sigla;
+	@OneToMany(mappedBy="uf", cascade = CascadeType.ALL)
+	private List<Cidade> cidade;
+	@OneToMany(mappedBy="uf")
+	private List<Empresa> empresa;
+	@OneToMany(mappedBy="uf")
+	private List<Fiscalizacao> fiscalizacao;
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getSigla() {
+		return sigla;
+	}
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
 	}
 	public String getNome() {
 		return nome;
@@ -70,6 +47,9 @@ public class Cidade implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	@Column(name = "nome")
+	private String nome;
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,7 +65,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Uf other = (Uf) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

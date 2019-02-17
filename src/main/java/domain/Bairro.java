@@ -3,7 +3,6 @@ package domain;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,31 +14,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_cidade")
-public class Cidade implements Serializable {
+@Table(name="tb_bairro")
+public class Bairro  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@Column(name="nome", length=50, nullable=false )
+	@Column(name = "cnpj")
 	private String nome;
-	@OneToMany(mappedBy="cidade", cascade = CascadeType.ALL)
-	private List<Bairro> bairros;
-	@OneToMany(mappedBy="cidade")
+	@OneToMany(mappedBy="bairro")
 	private List<Fiscalizacao> fiscalizacoes;
-	@OneToMany(mappedBy="cidade")
-	private List<Empresa> empresas;
+	@OneToMany(mappedBy="bairro")
+	private List<Empresa> Empresas;
 	@ManyToOne
-    @JoinColumn(name="ufId")
-	private Uf uf;
+    @JoinColumn(name="cidadeId")
+	private Cidade cidade;
 	
-	public List<Bairro> getBairros() {
-		return bairros;
-	}
-	public void setBairros(List<Bairro> bairros) {
-		this.bairros = bairros;
-	}
 	public List<Fiscalizacao> getFiscalizacoes() {
 		return fiscalizacoes;
 	}
@@ -47,16 +38,16 @@ public class Cidade implements Serializable {
 		this.fiscalizacoes = fiscalizacoes;
 	}
 	public List<Empresa> getEmpresas() {
-		return empresas;
+		return Empresas;
 	}
 	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
+		Empresas = empresas;
 	}
-	public Uf getUf() {
-		return uf;
+	public Cidade getCidade() {
+		return cidade;
 	}
-	public void setUf(Uf uf) {
-		this.uf = uf;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 	public Long getId() {
 		return id;
@@ -85,7 +76,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Bairro other = (Bairro) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
