@@ -11,9 +11,11 @@ import javax.persistence.TypedQuery;
 import domain.Bairro;
 import domain.Cidade;
 import domain.Empresa;
+import domain.Estado;
 import domain.Fiscalizacao;
 import domain.Uf;
 import infra.JPAUtil;
+import services.CpfCnpjUtils;
 
 
 
@@ -31,7 +33,7 @@ public class Main {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] excelLine = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] excelLine = line.split(";");
                 
         		String mesTermino = excelLine[1];
         		String cnpjEstabelecimento = excelLine[2];
@@ -42,11 +44,15 @@ public class Main {
         		String municipio = excelLine[7];
         		String estado = excelLine[8];
         		
-        		//cep valid
-                String regex = "\\d{5}-\\d{3}";
-        		if(cepEstabelecimento.matches(regex)) {
+        		//Valid CNPJ
+        		if(CpfCnpjUtils.isValidCNPJ(cnpjEstabelecimento)) {
         			Uf uf = new Uf();
-        			uf.setSigla("SP");
+        			if(estado == "São Paulo") {
+            			uf.setSigla(Estado.SP);
+        			}
+        			if(estado == "Rio de Janeiro") {
+            			uf.setSigla(Estado.RJ);
+        			}
         			uf.setNome(estado);
 
     				String jpqlUf = "select u from Uf u where u.sigla = :pNome";
@@ -61,14 +67,6 @@ public class Main {
         			Cidade cidade = new Cidade();
         			cidade.setNome(municipio);
         			cidade.setUf(uf);
-
-//    				String jpql = " select u from Cidade u where u.nome = :pNome";
-//    				TypedQuery<Cidade> query = em.createQuery(jpql, Cidade.class);
-//    				query.setParameter("pNome", cidade.getNome().trim().toLowerCase());
-//    				try {
-//    					cidade = query.getSingleResult();
-//    				} catch (NoResultException ex) {
-//    				}
         			
         			Bairro bairro = new Bairro();
         			bairro.setNome(bairroEstabelecimento);

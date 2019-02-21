@@ -21,7 +21,7 @@ public class Uf  implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "sigla")
-	private String sigla;
+	private Estado sigla;
 	@OneToMany(mappedBy="uf", cascade = CascadeType.ALL)
 	private List<Cidade> cidade;
 	@OneToMany(mappedBy="uf")
@@ -35,10 +35,10 @@ public class Uf  implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getSigla() {
+	public Estado getSigla() {
 		return sigla;
 	}
-	public void setSigla(String sigla) {
+	public void setSigla(Estado sigla) {
 		this.sigla = sigla;
 	}
 	public String getNome() {
