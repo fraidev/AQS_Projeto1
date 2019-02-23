@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class Fiscalizacao implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "data")
-	private String data;
+	private LocalDate data;
 	@Column(name = "razaoSocial")
 	private String razaoSocial;
 	@Column(name = "logadouro")
@@ -65,10 +67,10 @@ public class Fiscalizacao implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getRazaoSocial() {
