@@ -14,7 +14,6 @@ import javax.persistence.TypedQuery;
 import domain.Bairro;
 import domain.Cidade;
 import domain.Empresa;
-import domain.Estado;
 import domain.Fiscalizacao;
 import domain.LinhaComProblema;
 import domain.Uf;
@@ -52,7 +51,7 @@ public class Main {
         		//Valid CNPJ
         		if(CpfCnpjUtils.isValidCNPJ(cnpjEstabelecimento)) {
         			Uf uf = new Uf();
-        			uf.setSigla(Estado.SP);
+        			uf.setSigla("SP");
         			uf.setNome(estado);
 					String jpqlUf = "select u from Uf u where u.sigla = :pNome"; TypedQuery<Uf>
 					queryUf = em.createQuery(jpqlUf, Uf.class); queryUf.setParameter("pNome",
@@ -102,12 +101,15 @@ public class Main {
         			fiscalizacao.setData(ultimaSexta);
         			fiscalizacao.setEmpresa(empresa);
 
-					String jpqlFiscalizacao = "select u from Fiscalizacao u where u.empresa = :pEmpresa and u.data = :pData"; TypedQuery<Fiscalizacao>
-					queryFiscalizacao = em.createQuery(jpqlFiscalizacao, Fiscalizacao.class); 
-					queryFiscalizacao.setParameter("pEmpresa", fiscalizacao.getEmpresa()); 
-					queryFiscalizacao.setParameter("pData", fiscalizacao.getData()); 
-					try { fiscalizacao = queryFiscalizacao.getSingleResult(); } catch
-					(NoResultException ex) { System.out.println(ex); }	
+//					String jpqlFiscalizacao = "select u from Fiscalizacao u where u.empresa = :pEmpresa and u.data = :pData"; TypedQuery<Fiscalizacao>
+//					queryFiscalizacao = em.createQuery(jpqlFiscalizacao, Fiscalizacao.class); 
+//					queryFiscalizacao.setParameter("pEmpresa", fiscalizacao.getEmpresa()); 
+//					queryFiscalizacao.setParameter("pData", fiscalizacao.getData()); 
+//					try { fiscalizacao = queryFiscalizacao.getSingleResult(); } 
+//					catch(NoResultException ex) 
+//					{ 
+//						System.out.println(ex); 
+//					}	
 					
             		
             		try {

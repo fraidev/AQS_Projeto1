@@ -2,7 +2,6 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +36,9 @@ public class Fiscalizacao implements Serializable {
 	@ManyToOne
     @JoinColumn(name="CidadeId")
 	private Cidade cidade;
+	@ManyToOne
+    @JoinColumn(name="EmpresaId")
+	private Empresa empresa;
 	
 	public Uf getUf() {
 		return uf;
@@ -59,7 +61,6 @@ public class Fiscalizacao implements Serializable {
 		this.cidade = empresa.getCidade();
 		this.uf = empresa.getUf();
 	}
-	private Empresa empresa;
 	
 	public Long getId() {
 		return id;

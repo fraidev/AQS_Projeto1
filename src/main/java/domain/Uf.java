@@ -21,24 +21,26 @@ public class Uf  implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "sigla")
-	private Estado sigla;
+	private String sigla;
+	@Column(name = "nome")
+	private String nome;
 	@OneToMany(mappedBy="uf", cascade = CascadeType.ALL)
 	private List<Cidade> cidade;
 	@OneToMany(mappedBy="uf")
 	private List<Empresa> empresa;
 	@OneToMany(mappedBy="uf")
 	private List<Fiscalizacao> fiscalizacao;
-
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Estado getSigla() {
+	public String getSigla() {
 		return sigla;
 	}
-	public void setSigla(Estado sigla) {
+	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
 	public String getNome() {
@@ -47,8 +49,6 @@ public class Uf  implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	@Column(name = "nome")
-	private String nome;
 	
 	@Override
 	public int hashCode() {
@@ -72,5 +72,10 @@ public class Uf  implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Uf:[%d, %s]", id, nome);
 	}
 }
