@@ -1,4 +1,4 @@
-package services;
+package domain.services.validators;
 
 public class CpfCnpjUtils {
 
@@ -13,17 +13,17 @@ public class CpfCnpjUtils {
         soma = 11 - soma % 11;
         return soma > 9 ? 0 : soma;
     }
-    
+
     public static boolean isValidCNPJ(String cnpj) {
-    	try {
+        try {
             cnpj = cnpj.trim().replace(".", "").replace("-", "").replace("/", "");
             if ((cnpj==null)||(cnpj.length()!=14)) return false;
 
             Integer digito1 = calcularDigito(cnpj.substring(0,12), pesoCNPJ);
             Integer digito2 = calcularDigito(cnpj.substring(0,12) + digito1, pesoCNPJ);
             return cnpj.equals(cnpj.substring(0,12) + digito1.toString() + digito2.toString());
-    	}catch(Exception ex) {
-    		return false;
-    	}
+        }catch(Exception ex) {
+            return false;
+        }
     }
 }

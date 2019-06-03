@@ -1,18 +1,8 @@
-package domain;
+package domain.models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_cidade")
@@ -27,8 +17,6 @@ public class Cidade implements Serializable {
 	@OneToMany(mappedBy="cidade", cascade = CascadeType.ALL)
 	private List<Bairro> bairros;
 	@OneToMany(mappedBy="cidade")
-	private List<Fiscalizacao> fiscalizacoes;
-	@OneToMany(mappedBy="cidade")
 	private List<Empresa> empresas;
 	@ManyToOne
     @JoinColumn(name="ufId")
@@ -39,12 +27,6 @@ public class Cidade implements Serializable {
 	}
 	public void setBairros(List<Bairro> bairros) {
 		this.bairros = bairros;
-	}
-	public List<Fiscalizacao> getFiscalizacoes() {
-		return fiscalizacoes;
-	}
-	public void setFiscalizacoes(List<Fiscalizacao> fiscalizacoes) {
-		this.fiscalizacoes = fiscalizacoes;
 	}
 	public List<Empresa> getEmpresas() {
 		return empresas;

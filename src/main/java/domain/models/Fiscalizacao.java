@@ -1,15 +1,10 @@
-package domain;
+package domain.models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="tb_fiscalizacao")
@@ -19,47 +14,30 @@ public class Fiscalizacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
+
 	@Column(name = "data")
 	private LocalDate data;
-	@Column(name = "razaoSocial")
-	private String razaoSocial;
-	@Column(name = "logadouro")
-	private String logadouro;
-	@Column(name = "cep")
-	private String cep;
+
 	@ManyToOne
-    @JoinColumn(name="ufId")
-	private Uf uf;
+	@JoinColumn(name="fiscal1Id")
+	private Fiscal fiscal1;
+
 	@ManyToOne
-    @JoinColumn(name="bairroId")
-	private Bairro bairro;
-	@ManyToOne
-    @JoinColumn(name="CidadeId")
-	private Cidade cidade;
-	@ManyToOne
+	@JoinColumn(name="fiscal2Id")
+	private Fiscal fiscal2;
+
+	@OneToMany(mappedBy = "fiscalizacao", cascade = CascadeType.DETACH)
+	private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+	@ManyToOne()
     @JoinColumn(name="EmpresaId")
 	private Empresa empresa;
-	
-	public Uf getUf() {
-		return uf;
-	}
-	public Bairro getBairro() {
-		return bairro;
-	}
-	public Cidade getCidade() {
-		return cidade;
-	}
+
 	public Empresa getEmpresa() {
 		return empresa;
 	}
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
-		this.razaoSocial = empresa.getRazaoSocial();
-		this.logadouro = empresa.getLogadouro();
-		this.cep = empresa.getCep();
-		this.bairro = empresa.getBairro();
-		this.cidade = empresa.getCidade();
-		this.uf = empresa.getUf();
 	}
 	
 	public Long getId() {
@@ -74,18 +52,7 @@ public class Fiscalizacao implements Serializable {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-	public String getLogadouro() {
-		return logadouro;
-	}
-	public void setLogadouro(String logadouro) {
-		this.logadouro = logadouro;
-	}
-	public String getCep() {
-		return cep;
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,5 +75,29 @@ public class Fiscalizacao implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Fiscal getFiscal1() {
+		return fiscal1;
+	}
+
+	public void setFiscal1(Fiscal fiscal1) {
+		this.fiscal1 = fiscal1;
+	}
+
+	public Fiscal getFiscal2() {
+		return fiscal2;
+	}
+
+	public void setFiscal2(Fiscal fiscal2) {
+		this.fiscal2 = fiscal2;
+	}
+
+	public List<Ocorrencia> getOcorrencias() {
+		return ocorrencias;
+	}
+
+	public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+		this.ocorrencias = ocorrencias;
 	}
 }

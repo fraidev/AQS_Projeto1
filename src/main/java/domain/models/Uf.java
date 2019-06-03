@@ -1,36 +1,28 @@
-package domain;
+package domain.models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_uf")
 public class Uf  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "sigla")
+	@Column(name = "sigla", unique = true)
 	private String sigla;
-	@Column(name = "nome")
+	@Column(name = "nome", unique = true)
 	private String nome;
 	@OneToMany(mappedBy="uf", cascade = CascadeType.ALL)
-	private List<Cidade> cidade;
+	private List<Bairro> bairros;
+	@OneToMany(mappedBy="uf", cascade = CascadeType.ALL)
+	private List<Cidade> cidades;
 	@OneToMany(mappedBy="uf")
-	private List<Empresa> empresa;
-	@OneToMany(mappedBy="uf")
-	private List<Fiscalizacao> fiscalizacao;
-	
+	private List<Empresa> empresas;
+
 	public Long getId() {
 		return id;
 	}
@@ -77,5 +69,37 @@ public class Uf  implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("Uf:[%d, %s]", id, nome);
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+
+	public List<Empresa> getEmpresas() {
+		return empresas;
+	}
+
+	public void setEmpresas(List<Empresa> empresas) {
+		this.empresas = empresas;
+	}
+
+//	public List<Fiscalizacao> getFiscalizacoes() {
+//		return fiscalizacoes;
+//	}
+//
+//	public void setFiscalizacoes(List<Fiscalizacao> fiscalizacoes) {
+//		this.fiscalizacoes = fiscalizacoes;
+//	}
+
+	public List<Bairro> getBairros() {
+		return bairros;
+	}
+
+	public void setBairros(List<Bairro> bairros) {
+		this.bairros = bairros;
 	}
 }

@@ -1,17 +1,8 @@
-package domain;
+package domain.models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_empresa")
@@ -29,16 +20,16 @@ public class Empresa implements Serializable {
 	private String logadouro;
 	@Column(name = "cep")
 	private String cep;
-	@ManyToOne
+	@ManyToOne()
     @JoinColumn(name="bairroId")
 	private Bairro bairro;
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="cidadeId")
 	private Cidade cidade;
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="ufId")
 	private Uf uf;
-	@OneToMany(mappedBy="empresa", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="empresa")
 	private List<Fiscalizacao> fiscalizacoes;
 	
 	public Uf getUf() {

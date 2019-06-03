@@ -1,12 +1,11 @@
-package domain;
+package domain.models;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="linhas_com_problema")
 public class LinhaComProblema implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -54,6 +53,20 @@ public class LinhaComProblema implements Serializable {
 			return false;
 		return true;
 	}
+
+	public LinhaComProblema(String[] excelLine){
+		this.anoTermino = excelLine[0];
+		this.mesTermino = excelLine[1];
+		this.cnpjEstabelecimento = excelLine[2];
+		this.empresaNome = excelLine[3];
+		this.rua = excelLine[4];
+		this.cepEstabelecimento = excelLine[5];
+		this.bairroEstabelecimento = excelLine[6];
+		this.municipio = excelLine[7];
+		this.estado = excelLine[8];
+	}
+
+
 	public Long getId() {
 		return id;
 	}
