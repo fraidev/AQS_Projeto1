@@ -2,6 +2,8 @@ package domain.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -9,21 +11,20 @@ import java.util.UUID;
 public class Ocorrencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false )
-    private UUID id;
+    private Long id;
     @Column(name = "codigo", unique=true)
     private String codigo;
     @Column(name = "nome")
     private String nome;
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
-    @JoinColumn(name="fiscalizacaoId")
-    private Fiscalizacao fiscalizacao;
+    @ManyToMany(mappedBy="ocorrencias", fetch = FetchType.EAGER)
+    private List<Fiscalizacao> fiscalizacao = new ArrayList<>();
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getNome() {
@@ -32,10 +33,10 @@ public class Ocorrencia implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public Fiscalizacao getFiscalizacao() {
+    public List<Fiscalizacao> getFiscalizacoes() {
         return fiscalizacao;
     }
-    public void setFiscalizacao(Fiscalizacao fiscalizacao) {
+    public void setFiscalizacoes(List<Fiscalizacao> fiscalizacao) {
         this.fiscalizacao = fiscalizacao;
     }
     public String getCodigo() {
